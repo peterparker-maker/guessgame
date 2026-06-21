@@ -6,5 +6,5 @@ import react from "@vitejs/plugin-react";
 // 如果你改用自訂網域（不是 github.io 子路徑），也可以改回 "/"。
 export default defineConfig({
   plugins: [react()],
-  base: "./",
+  base: "/guessgame/",
 });
