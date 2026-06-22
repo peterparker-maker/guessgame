@@ -5,6 +5,15 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+environment:
+  name: github-pages
+  url: ${{ steps.deployment.outputs.page_url }}
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -24,10 +33,11 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Commit docs folder
-        run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          git add docs/
-          git commit -m "Build: Update docs folder" || echo "No changes to commit"
-          git push
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './docs'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
