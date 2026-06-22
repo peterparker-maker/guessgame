@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   base: "/guessgame/",
   build: {
-    outDir: "dist",
+    outDir: "docs",
     emptyOutDir: true,
   },
 });
