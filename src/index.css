@@ -20,3 +20,59 @@ button {
 input, textarea {
   font: inherit;
 }
+
+/* 響應式設計 - 自適應盒模型 */
+.responsive-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 clamp(12px, 5vw, 24px) 80px;
+}
+
+.responsive-title {
+  font-size: clamp(14px, 5vw, 20px);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.responsive-subtitle {
+  font-size: clamp(10px, 3vw, 13px);
+}
+
+.responsive-body {
+  font-size: clamp(12px, 2.5vw, 15px);
+}
+
+.responsive-button {
+  padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 20px);
+  font-size: clamp(12px, 2.5vw, 14px);
+  min-width: clamp(44px, 10vw, 60px);
+  min-height: 44px;
+}
+
+/* 手機適配：< 640px */
+@media (max-width: 639px) {
+  .responsive-card {
+    border-radius: 12px;
+    padding: clamp(12px, 4vw, 16px);
+  }
+
+  .responsive-modal {
+    padding: 16px;
+    margin: 16px;
+  }
+}
+
+/* 平板適配：640px - 1024px */
+@media (min-width: 640px) and (max-width: 1024px) {
+  .responsive-gap {
+    gap: clamp(8px, 2vw, 12px);
+  }
+}
+
+/* 桌面：> 1024px */
+@media (min-width: 1025px) {
+  .responsive-container {
+    max-width: 900px;
+  }
+}

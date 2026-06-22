@@ -270,7 +270,7 @@ export default function GuessGame() {
       <PaperTexture />
       <TopBar view={view} setView={setView} setShowHelp={setShowHelp} />
 
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 720, margin: "0 auto", padding: "0 20px 80px" }}>
+      <div style={{ position: "relative", zIndex: 1, maxWidth: 900, margin: "0 auto", padding: "0 clamp(12px, 5vw, 24px) 80px" }}>
         {view.name === "list" && (
           <ListScreen
             questions={questions}
@@ -434,7 +434,7 @@ function TopBar({ view, setView, setShowHelp }) {
       borderBottom: `1px solid ${COLORS.goldSoft}`,
     }}>
       <div style={{
-        maxWidth: 720, margin: "0 auto", padding: "16px 20px",
+        maxWidth: "100%", margin: "0 auto", padding: "clamp(12px, 3vw, 16px) clamp(12px, 5vw, 20px)",
         display: "flex", alignItems: "center", justifyContent: "space-between",
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
