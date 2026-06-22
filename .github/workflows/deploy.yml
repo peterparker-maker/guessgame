@@ -27,6 +27,17 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Check build output
+        run: |
+          echo "=== Files in dist ==="
+          ls -la dist/
+          echo ""
+          echo "=== First 100 lines of dist/index.html ==="
+          head -100 dist/index.html
+          echo ""
+          echo "=== Looking for .js files ==="
+          find dist -name "*.js" -type f
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
