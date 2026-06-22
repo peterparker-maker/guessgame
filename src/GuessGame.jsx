@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import {
-  Heart, Lock, Unlock, Plus, ChevronLeft, Image as ImageIcon,
+  Star, Lock, Unlock, Plus, ChevronLeft, Image as ImageIcon,
   Calendar, KeyRound, Settings, Check, X, Clock, Eye, EyeOff,
   Sparkles, ChevronRight, Trash2, WifiOff, AlertTriangle
 } from "lucide-react";
@@ -339,7 +339,7 @@ function LoadingScreen() {
       background: COLORS.paper, fontFamily: "'Iowan Old Style',Georgia,serif", color: COLORS.inkSoft,
     }}>
       <div style={{ textAlign: "center" }}>
-        <Heart size={28} style={{ marginBottom: 10, opacity: 0.5 }} />
+        <Star size={28} style={{ marginBottom: 10, opacity: 0.5 }} />
         <div>正在開信箱…</div>
       </div>
     </div>
@@ -384,7 +384,7 @@ function TopBar({ view, setView }) {
               <ChevronLeft size={20} color={COLORS.ink} />
             </button>
           ) : (
-            <Heart size={20} color={COLORS.wax} fill={COLORS.wax} />
+            <Star size={20} color={COLORS.wax} fill={COLORS.wax} />
           )}
           <div>
             <div style={{ fontSize: 18, fontWeight: 700, letterSpacing: 0.5 }}>
@@ -451,7 +451,7 @@ function ListScreen({ questions, onOpen, onAdmin }) {
 function EmptyState({ onAdmin }) {
   return (
     <div style={{ textAlign: "center", padding: "80px 20px" }}>
-      <Heart size={36} color={COLORS.goldSoft} style={{ marginBottom: 16 }} />
+      <Star size={36} color={COLORS.goldSoft} style={{ marginBottom: 16 }} />
       <div style={{ fontSize: 18, marginBottom: 6 }}>信箱還是空的</div>
       <div style={{ fontSize: 13.5, color: COLORS.inkSoft, marginBottom: 24, fontFamily: "'Noto Sans TC',sans-serif" }}>
         新增第一道題目，開始你們的猜猜看
@@ -630,7 +630,7 @@ function AnswerPane({ who, label, color, question, onUpdate, showToast }) {
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
         <WaxSeal color={color} size={32}>
-          {locked ? <Lock size={14} color="#fff" /> : <Heart size={14} color="#fff" fill="#fff" />}
+          {locked ? <Lock size={14} color="#fff" /> : (who === "boy" ? <Star size={14} color="#fff" fill="#fff" /> : <Sparkles size={14} color="#fff" />)}
         </WaxSeal>
         <div style={{ fontWeight: 700, fontSize: 14.5, fontFamily: "'Noto Sans TC',sans-serif" }}>{label}</div>
         {locked && (
@@ -741,8 +741,8 @@ function UnlockScreen({ question, onUpdate, showToast }) {
         border: `1.5px solid ${COLORS.goldSoft}`, position: "relative",
       }}>
         <div style={{ display: "flex", justifyContent: "center", gap: 8, marginBottom: 18 }}>
-          <WaxSeal color={COLORS.wax} size={48}><Heart size={18} color="#fff" fill="#fff" /></WaxSeal>
-          <WaxSeal color={COLORS.pine} size={48}><Heart size={18} color="#fff" fill="#fff" /></WaxSeal>
+          <WaxSeal color={COLORS.wax} size={48}><Star size={18} color="#fff" fill="#fff" /></WaxSeal>
+          <WaxSeal color={COLORS.pine} size={48}><Sparkles size={18} color="#fff" /></WaxSeal>
         </div>
 
         <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 4 }}>可以拆信了</div>
