@@ -34,6 +34,9 @@ jobs:
         env:
           CI: true
 
+      - name: Check dist contents
+        run: ls -la dist/ && head -50 dist/index.html
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
