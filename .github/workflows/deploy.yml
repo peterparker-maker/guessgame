@@ -5,9 +5,6 @@ on:
     branches:
       - main
 
-permissions:
-  contents: write
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -27,19 +24,10 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Check build output
+      - name: Commit docs folder
         run: |
-          echo "=== Files in dist ==="
-          ls -la dist/
-          echo ""
-          echo "=== First 100 lines of dist/index.html ==="
-          head -100 dist/index.html
-          echo ""
-          echo "=== Looking for .js files ==="
-          find dist -name "*.js" -type f
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git add docs/
+          git commit -m "Build: Update docs folder" || echo "No changes to commit"
+          git push
