@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import {
   Star, Lock, Unlock, Plus, ChevronLeft, Image as ImageIcon,
   Calendar, KeyRound, Settings, Check, X, Clock, Eye, EyeOff,
-  Sparkles, ChevronRight, Trash2, WifiOff, AlertTriangle
+  Sparkles, ChevronRight, Trash2, WifiOff, AlertTriangle, HelpCircle
 } from "lucide-react";
 import { db } from "./firebaseConfig.js";
 import {
@@ -166,6 +166,7 @@ export default function GuessGame() {
   const [view, setView] = useState({ name: "list" }); // list | detail | admin
   const [toast, setToast] = useState(null);
   const [connError, setConnError] = useState(null);
+  const [showHelp, setShowHelp] = useState(false);
   const seeded = useRef(false);
 
   useEffect(() => {
@@ -267,7 +268,7 @@ export default function GuessGame() {
       }}
     >
       <PaperTexture />
-      <TopBar view={view} setView={setView} />
+      <TopBar view={view} setView={setView} setShowHelp={setShowHelp} />
 
       <div style={{ position: "relative", zIndex: 1, maxWidth: 720, margin: "0 auto", padding: "0 20px 80px" }}>
         {view.name === "list" && (
@@ -297,6 +298,7 @@ export default function GuessGame() {
       </div>
 
       {toast && <Toast text={toast} />}
+      {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
     </div>
   );
 }
@@ -346,6 +348,67 @@ function LoadingScreen() {
   );
 }
 
+function HelpModal({ onClose }) {
+  return (
+    <div style={{
+      position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      zIndex: 100, padding: 20,
+    }}>
+      <div style={{
+        background: COLORS.cream, borderRadius: 20, padding: 24, maxWidth: 500,
+        maxHeight: "80vh", overflowY: "auto", boxShadow: "0 10px 40px rgba(0,0,0,0.2)",
+      }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+          <div style={{ fontSize: 20, fontWeight: 700 }}>💡 使用說明</div>
+          <button onClick={onClose} style={{ background: "none", border: "none", fontSize: 24, cursor: "pointer" }}>
+            ✕
+          </button>
+        </div>
+
+        <div style={{ fontSize: 14, lineHeight: 1.8, color: COLORS.ink, fontFamily: "'Noto Sans TC',sans-serif" }}>
+          <div style={{ marginBottom: 18 }}>
+            <div style={{ fontWeight: 700, marginBottom: 6, fontSize: 15 }}>📝 如何寫答案</div>
+            <ol style={{ marginLeft: 20, marginTop: 6 }}>
+              <li>點擊題目卡片進入</li>
+              <li>選擇你的身份（⭐ 男生 或 ✨ 女生）</li>
+              <li>輸入或上傳你的答案</li>
+              <li>點擊「封存這個答案」提交</li>
+              <li>答案會被加密，只有在解鎖後才能看到</li>
+            </ol>
+          </div>
+
+          <div style={{ marginBottom: 18 }}>
+            <div style={{ fontWeight: 700, marginBottom: 6, fontSize: 15 }}>🔓 如何打開答案</div>
+            <ol style={{ marginLeft: 20, marginTop: 6 }}>
+              <li>等雙方都寫好答案後，狀態會顯示「可以拆信了」</li>
+              <li>點擊進入題目</li>
+              <li>如果有設定「通關密語」，兩個人都要輸入密語</li>
+              <li>點擊「拆信對答案」，答案就會揭曉！</li>
+            </ol>
+          </div>
+
+          <div style={{ padding: 12, background: `${COLORS.goldSoft}33`, borderRadius: 10, fontSize: 13 }}>
+            💡 <strong>小提示：</strong>可以設定解鎖日期或通關密語，讓遊戲更有趣！
+          </div>
+        </div>
+
+        <button
+          onClick={onClose}
+          style={{
+            marginTop: 20, width: "100%", padding: 12,
+            background: COLORS.wax, color: "#fff", border: "none",
+            borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: "pointer",
+            fontFamily: "'Noto Sans TC',sans-serif",
+          }}
+        >
+          知道了！
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function Toast({ text }) {
   return (
     <div style={{
@@ -362,7 +425,7 @@ function Toast({ text }) {
 // ================================================================
 // 頂部列
 // ================================================================
-function TopBar({ view, setView }) {
+function TopBar({ view, setView, setShowHelp }) {
   const showBack = view.name !== "list";
   return (
     <div style={{
@@ -400,9 +463,14 @@ function TopBar({ view, setView }) {
           </div>
         </div>
         {view.name === "list" && (
-          <button onClick={() => setView({ name: "admin" })} style={iconBtnStyle} aria-label="管理題目">
-            <Settings size={19} color={COLORS.inkSoft} />
-          </button>
+          <div style={{ display: "flex", gap: 8 }}>
+            <button onClick={() => setShowHelp(true)} style={iconBtnStyle} aria-label="幫助">
+              <HelpCircle size={19} color={COLORS.inkSoft} />
+            </button>
+            <button onClick={() => setView({ name: "admin" })} style={iconBtnStyle} aria-label="管理題目">
+              <Settings size={19} color={COLORS.inkSoft} />
+            </button>
+          </div>
         )}
       </div>
     </div>
